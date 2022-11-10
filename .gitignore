@@ -102,3 +102,11 @@ dist
 
 # TernJS port file
 .tern-port
+
+# CDK-specific ignores ###
+*.swp
+cdk.context.json
+package-lock.json
+yarn.lock
+.cdk.staging
+cdk.out
