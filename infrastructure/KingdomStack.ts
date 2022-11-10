@@ -8,9 +8,11 @@ import {
 	Runtime,
 } from "aws-cdk-lib/aws-lambda";
 import { LambdaIntegration, RestApi } from "aws-cdk-lib/aws-apigateway";
+import { GenericTable } from "./GenericTable";
 
 export class KingdomStack extends Stack {
 	private api = new RestApi(this, "KingdomApi");
+	private kingdomTable = new GenericTable("KingdomTable", "kingdomId", this);
 
 	constructor(scope?: Construct, id?: string, props?: StackProps) {
 		super(scope, id, props);
