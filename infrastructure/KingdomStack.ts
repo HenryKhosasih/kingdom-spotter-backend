@@ -14,7 +14,11 @@ import { PolicyStatement } from "aws-cdk-lib/aws-iam";
 
 export class KingdomStack extends Stack {
 	private api = new RestApi(this, "KingdomApi");
-	private kingdomTable = new GenericTable("KingdomTable", "kingdomId", this);
+	private KingdomTable = new GenericTable(this, {
+		tableName: "KingdomTable",
+		primaryKey: "kingdomId",
+		createLambdaPath: "Create",
+	});
 
 	constructor(scope?: Construct, id?: string, props?: StackProps) {
 		super(scope, id, props);
@@ -35,5 +39,12 @@ export class KingdomStack extends Stack {
 		const helloLambdaIntegration = new LambdaIntegration(helloLambdaNodeJs);
 		const helloLambdaResource = this.api.root.addResource("hello");
 		helloLambdaResource.addMethod("GET", helloLambdaIntegration);
+
+		// Kingdom API integrations
+		const kingdomResource = this.api.root.addResource("kingdom");
+		kingdomResource.addMethod(
+			"POST",
+			this.KingdomTable.createLambdaIntegration
+		);
 	}
 }
