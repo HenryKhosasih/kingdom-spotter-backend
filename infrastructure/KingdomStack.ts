@@ -18,6 +18,7 @@ export class KingdomStack extends Stack {
 		tableName: "KingdomTable",
 		primaryKey: "kingdomId",
 		createLambdaPath: "Create",
+		readLambdaPath: "Read",
 	});
 
 	constructor(scope?: Construct, id?: string, props?: StackProps) {
@@ -46,5 +47,6 @@ export class KingdomStack extends Stack {
 			"POST",
 			this.KingdomTable.createLambdaIntegration
 		);
+		kingdomResource.addMethod("GET", this.KingdomTable.readLambdaIntegration);
 	}
 }
