@@ -17,6 +17,7 @@ export class KingdomStack extends Stack {
 	private KingdomTable = new GenericTable(this, {
 		tableName: "KingdomTable",
 		primaryKey: "kingdomId",
+		secondaryIndexes: ["location"],
 		createLambdaPath: "Create",
 		readLambdaPath: "Read",
 	});

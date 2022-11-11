@@ -8,6 +8,7 @@ import { LambdaIntegration } from "aws-cdk-lib/aws-apigateway";
 export interface TableProps {
 	tableName: string;
 	primaryKey: string;
+	secondaryIndexes?: string[];
 	createLambdaPath?: string;
 	readLambdaPath?: string;
 	updateLambdaPath?: string;
@@ -37,6 +38,7 @@ export class GenericTable {
 
 	private initialize() {
 		this.createTable();
+		this.addSecondaryIndexes();
 		this.createLambdas();
 		this.grantTableRights();
 	}
@@ -46,6 +48,20 @@ export class GenericTable {
 			tableName: this.props.tableName,
 			partitionKey: { name: this.props.primaryKey, type: AttributeType.STRING },
 		});
+	}
+
+	private addSecondaryIndexes() {
+		if (this.props.secondaryIndexes) {
+			for (const secondaryIndex of this.props.secondaryIndexes) {
+				this.table.addGlobalSecondaryIndex({
+					indexName: secondaryIndex,
+					partitionKey: {
+						name: secondaryIndex,
+						type: AttributeType.STRING,
+					},
+				});
+			}
+		}
 	}
 
 	private createLambdas() {
