@@ -9,6 +9,7 @@ import {
 } from "aws-cdk-lib/aws-lambda";
 import { LambdaIntegration, RestApi } from "aws-cdk-lib/aws-apigateway";
 import { GenericTable } from "./GenericTable";
+import { NodejsFunction } from "aws-cdk-lib/aws-lambda-nodejs";
 
 export class KingdomStack extends Stack {
 	private api = new RestApi(this, "KingdomApi");
@@ -21,6 +22,12 @@ export class KingdomStack extends Stack {
 			runtime: Runtime.NODEJS_16_X,
 			code: Code.fromAsset(join(__dirname, "..", "services", "hello")),
 			handler: "hello.main",
+		});
+
+		const helloLambdaNodeJs = new NodejsFunction(this, "helloLambdaNodeJs", {
+			runtime: Runtime.NODEJS_16_X,
+			entry: join(__dirname, "..", "services", "node-lambda", "hello.ts"),
+			handler: "handler",
 		});
 
 		// Hello Api lambda integration
