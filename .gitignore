@@ -1,6 +1,9 @@
 # request test
 requests.http
 
+#vscode
+.vscode
+
 # Logs
 logs
 *.log

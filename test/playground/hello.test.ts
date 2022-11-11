@@ -1,9 +1,3 @@
-import { handler } from "../../services/KingdomTable/Create";
+import { handler } from "../../services/KingdomTable/Read";
 
-const event = {
-	body: {
-		location: "Poluto",
-	},
-};
-
-handler(event as any, {} as any);
+handler({} as any, {} as any);
