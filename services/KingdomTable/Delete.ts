@@ -18,20 +18,26 @@ async function handler(
 		body: "Hello from DynamoDB",
 	};
 
-	const kingdomId = event.queryStringParameters?.[PRIMARY_KEY];
+	try {
+		const kingdomId = event.queryStringParameters?.[PRIMARY_KEY];
 
-	if (kingdomId) {
-		const deleteResult = await dbClient
-			.delete({
-				TableName: TABLE_NAME,
-				Key: {
-					[PRIMARY_KEY]: kingdomId,
-				},
-				ReturnValues: "ALL_OLD",
-			})
-			.promise();
+		if (kingdomId) {
+			const deleteResult = await dbClient
+				.delete({
+					TableName: TABLE_NAME,
+					Key: {
+						[PRIMARY_KEY]: kingdomId,
+					},
+					ReturnValues: "ALL_OLD",
+				})
+				.promise();
 
-		result.body = JSON.stringify(deleteResult);
+			result.body = JSON.stringify(deleteResult);
+		}
+	} catch (error) {
+		if (error instanceof Error) {
+			result.body = error.message;
+		}
 	}
 
 	return result;

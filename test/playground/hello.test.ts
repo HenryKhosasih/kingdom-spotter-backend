@@ -1,10 +1,11 @@
 import { APIGatewayProxyEvent } from "aws-lambda";
-import { handler } from "../../services/KingdomTable/Delete";
+import { handler } from "../../services/KingdomTable/Create";
 
 const event: APIGatewayProxyEvent = {
-	queryStringParameters: {
-		kingdomId: "a3d3921d-6980-424b-9c6b-418f9974b236",
-	},
+	body: {
+		name: "testName",
+		location: "testLocation"
+	}
 } as any;
 
 const result = handler(event, {} as any).then((apiResult) => {
