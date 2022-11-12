@@ -20,6 +20,8 @@ export class KingdomStack extends Stack {
 		secondaryIndexes: ["location"],
 		createLambdaPath: "Create",
 		readLambdaPath: "Read",
+		updateLambdaPath: "Update",
+		deleteLambdaPath: "Delete",
 	});
 
 	constructor(scope?: Construct, id?: string, props?: StackProps) {
@@ -44,10 +46,16 @@ export class KingdomStack extends Stack {
 
 		// Kingdom API integrations
 		const kingdomResource = this.api.root.addResource("kingdom");
+
+		kingdomResource.addMethod("GET", this.KingdomTable.readLambdaIntegration);
 		kingdomResource.addMethod(
 			"POST",
 			this.KingdomTable.createLambdaIntegration
 		);
-		kingdomResource.addMethod("GET", this.KingdomTable.readLambdaIntegration);
+		kingdomResource.addMethod("PUT", this.KingdomTable.updateLambdaIntegration);
+		kingdomResource.addMethod(
+			"DELETE",
+			this.KingdomTable.deleteLambdaIntegration
+		);
 	}
 }
