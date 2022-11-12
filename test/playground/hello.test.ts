@@ -1,9 +1,12 @@
 import { APIGatewayProxyEvent } from "aws-lambda";
-import { handler } from "../../services/KingdomTable/Read";
+import { handler } from "../../services/KingdomTable/Update";
 
 const event: APIGatewayProxyEvent = {
 	queryStringParameters: {
-		location: "Kulger",
+		kingdomId: "58340c53-df0a-4678-8ffc-6e001dfd3775",
+	},
+	body: {
+		location: "Verusky",
 	},
 } as any;
 
